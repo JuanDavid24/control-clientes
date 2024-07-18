@@ -5,6 +5,22 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item px-2">
+            <a routerLink="/" class="nav-link">Inicio</a>
+          </li>
+
+          <li class="nav-item px-2 dropdown">       
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+              <i class="fa-regular fa-user mx-1" ></i> 
+              <span>Bienvenido</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a routerLink="/configuracion" class="dropdown-item"><i class="fa-solid fa-gear pe-1"></i>Configuración</a></li>
+            </ul>
+          </li>
+          
+        </ul>
       </div>
     </div>
   </nav>
