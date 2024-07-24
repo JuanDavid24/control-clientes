@@ -1,3 +1,11 @@
 <app-cabecero></app-cabecero>
+<ul>
+  <li class="text" *ngFor="let cliente of clientes$ | async">
+    {{cliente.nombre}}
+    {{cliente.apellido}}
+    {{cliente.email}}
+    {{cliente.saldo}}
+  </li>
+</ul>
 <router-outlet></router-outlet>
 <app-pie-pagina></app-pie-pagina>
