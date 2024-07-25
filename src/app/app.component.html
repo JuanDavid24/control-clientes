@@ -1,6 +1,6 @@
 <app-cabecero></app-cabecero>
 <ul>
-  <li class="text" *ngFor="let cliente of clientes$ | async">
+  <li class="text" *ngFor="let cliente of clientes | async">
     {{cliente.nombre}}
     {{cliente.apellido}}
     {{cliente.email}}
