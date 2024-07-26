@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ClienteServicio } from '../../servicios/cliente.service';
 import { Cliente } from '../../modelo/cliente.model';
 import { CurrencyPipe, NgFor } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [NgFor, CurrencyPipe],
+  imports: [NgFor, CurrencyPipe, RouterLink],
   templateUrl: './clientes.component.html',
   styleUrl: './clientes.component.css'
 })

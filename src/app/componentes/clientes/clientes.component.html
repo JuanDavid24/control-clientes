@@ -19,21 +19,27 @@
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Listado de clientes</h4>
+                        <h4 class="mb-0">Listado de clientes</h4>
                     </div>
-                    <table class="table table-secnodary table-striped">
+                    <table class="table table-secondary table-striped">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Nombre</th>
                                 <th>Saldo</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let cliente of clientes; let i = index">
+                            <tr *ngFor="let cliente of clientes; let i = index" class="align-middle">
                                 <td>{{i+1}}</td>
                                 <td>{{cliente.nombre}} {{cliente.apellido}}</td>
                                 <td>{{cliente.saldo | currency:'ARS': '$'}}</td>
+                                <td>
+                                    <a routerLink="/cliente/editar/{{cliente.id}}" class="btn btn-secondary">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
