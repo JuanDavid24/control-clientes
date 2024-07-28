@@ -25,4 +25,9 @@ export class ClientesComponent implements OnInit {
         }
       )
   }
+
+   getSaldoTotal() {
+    return this.clientes.reduce(
+      (acumSaldo, cliente) => acumSaldo + (cliente.saldo || 0), 0)
+  }
 }

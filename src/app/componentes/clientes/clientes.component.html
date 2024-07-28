@@ -45,6 +45,28 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Tarjetas laterales-->
+            <div class="col-md-3">
+                <div class="card text-center bg-danger text-white mb-3">
+                    <div class="card-body">
+                        <h3>Saldo total</h3>
+                        <h4 class="display-4">
+                            {{getSaldoTotal() | currency: 'ARS': '$'}}
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="card text-center bg-success text-white mb-3">
+                    <div class="card-body">
+                        <h3>Clientes totales</h3>
+                        <h4 class="display-4">
+                            <i class="fa-solid fa-users"></i>
+                            {{clientes.length}}
+                        </h4>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
  </section>
