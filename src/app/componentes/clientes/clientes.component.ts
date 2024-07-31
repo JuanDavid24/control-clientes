@@ -14,7 +14,6 @@ import { FormsModule, NgForm } from '@angular/forms';
 })
 export class ClientesComponent implements OnInit {
 
-
 cliente: Cliente = {
   nombre: '',
   apellido: '',
@@ -22,6 +21,7 @@ cliente: Cliente = {
   saldo: 0
 }
 clientes: Cliente[] = [];
+alertIsVisible: boolean = false;
 
 constructor(private clienteServicio: ClienteServicio) { }
 
@@ -40,7 +40,16 @@ ngOnInit(): void {
       }
       
     agregar(formCliente: NgForm) {
-      console.log("agregar cliente");
+      if (formCliente.invalid) {
+        this.alertIsVisible = true
+        console.log('error en form');
+        
+        setTimeout(() => {
+          this.alertIsVisible = false;
+        }, 4000); 
+      } else {
+        console.log("Agregar cliente");
+      }
     }
   }
     
