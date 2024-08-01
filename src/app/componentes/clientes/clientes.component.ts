@@ -21,7 +21,7 @@ cliente: Cliente = {
   saldo: 0
 }
 clientes: Cliente[] = [];
-alertIsVisible: boolean = false;
+alertVisible: boolean = false;
 
 constructor(private clienteServicio: ClienteServicio) { }
 
@@ -41,11 +41,11 @@ ngOnInit(): void {
       
     agregar(formCliente: NgForm) {
       if (formCliente.invalid) {
-        this.alertIsVisible = true
+        this.alertVisible = true
         console.log('error en form');
         
         setTimeout(() => {
-          this.alertIsVisible = false;
+          this.alertVisible = false;
         }, 4000); 
       } else {
         console.log("Agregar cliente");
