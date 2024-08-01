@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { Cliente } from "../modelo/cliente.model";
 import { Observable } from "rxjs";
-import { Firestore, collection, collectionData, orderBy, query } from "@angular/fire/firestore";
+import { DocumentReference, Firestore, addDoc, collection, collectionData, orderBy, query } from "@angular/fire/firestore";
 
 @Injectable({providedIn: 'root'})
 export class ClienteServicio{
@@ -11,5 +11,9 @@ export class ClienteServicio{
     getClientes(): Observable<Cliente[]> {
         const queryFn = query(this.clientesCollection, orderBy('nombre', 'asc'));
         return collectionData(queryFn, {idField: 'id'})
+    }
+
+    addCliente(cliente: Cliente): Promise<DocumentReference> {
+        return addDoc(this.clientesCollection, cliente)
     }
 }

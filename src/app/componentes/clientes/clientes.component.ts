@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ClienteServicio } from '../../servicios/cliente.service';
 import { Cliente } from '../../modelo/cliente.model';
 import { CurrencyPipe, NgClass, NgFor, NgIf } from '@angular/common';
@@ -22,6 +22,8 @@ cliente: Cliente = {
 }
 clientes: Cliente[] = [];
 alertVisible: boolean = false;
+@ViewChild("clienteForm") clienteForm !: NgForm;
+@ViewChild("botonCerrarModal") botonCerrarModal !: ElementRef;
 
 constructor(private clienteServicio: ClienteServicio) { }
 
@@ -41,15 +43,22 @@ ngOnInit(): void {
       
     agregar(formCliente: NgForm) {
       if (formCliente.invalid) {
-        this.alertVisible = true
-        console.log('error en form');
-        
+        //Error en formulario 
+        this.alertVisible = true;
         setTimeout(() => {
           this.alertVisible = false;
         }, 4000); 
-      } else {
-        console.log("Agregar cliente");
+      } 
+      else {
+        //Agregar cliente
+        this.clienteServicio.addCliente(this.cliente);
+        this.clienteForm.resetForm();
+        this.cerrarModal()
       }
+    }
+
+    private cerrarModal():void {
+      this.botonCerrarModal.nativeElement.click()
     }
   }
     
