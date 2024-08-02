@@ -1,1 +1,69 @@
-<p>editar-clientes works!</p>
+<header id="main-header" class="py-2 bg-info text-light">
+    <div class="container">
+        <div class="row">
+            <div class="col md 6">
+                <h1>
+                    <i class="fa-solid fa-user-pen"></i> Editar cliente
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Formulario cliente  -->
+<form #clienteForm="ngForm" (ngSubmit)="guardar(clienteForm)">
+    <div class="modal-body d-flex flex-column gap-2">
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" type="text" name="nombre" class="form-control" #nombre="ngModel"
+                [(ngModel)]=cliente.nombre required minlength="2"
+                [ngClass]="{'is-invalid': nombre.errors && nombre.touched}">
+            <div *ngIf="nombre.invalid && nombre.touched" class="invalid-feedback">
+                <span *ngIf="nombre.hasError('required')">Ingrese un nombre</span>
+                <span *ngIf="nombre.hasError('minlength')">El nombre es muy corto</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="apellido">Apellido</label>
+            <input id="apellido" type="text" name="apellido" class="form-control" #apellido="ngModel"
+                [(ngModel)]=cliente.apellido required minlength="2"
+                [ngClass]="{'is-invalid': apellido.errors && apellido.touched}">
+            <div *ngIf="email.invalid && email.touched" class="invalid-feedback">
+                <span *ngIf="apellido.hasError('required')">Ingrese un apellido</span>
+                <span *ngIf="apellido.hasError('minlength')">El apellido es muy corto</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input id="email" type="email" name="email" class="form-control" #email="ngModel" [(ngModel)]=cliente.email
+                [ngClass]="{'is-invalid': email.errors && email.touched}" required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
+            <div *ngIf="email.invalid && email.touched" class="invalid-feedback">
+                <span *ngIf="email.hasError('required')">Ingrese correo electrónico</span>
+                <span *ngIf="email.hasError('pattern')">El correo ingresado no es válido</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="saldo">Saldo</label>
+            <input id="saldo" type="number" name="saldo" class="form-control" #saldo="ngModel" [(ngModel)]=cliente.saldo
+                [ngClass]="{'is-invalid': saldo.errors && saldo.touched}" required min="0">
+            <div *ngIf="saldo.invalid && saldo.touched" class="invalid-feedback">
+                <span *ngIf="saldo.hasError('required')">Ingrese saldo</span>
+                <span *ngIf="saldo.hasError('min')">El saldo no puede ser negativo</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-danger fade" role="alert" *ngIf="alertVisible" [ngClass]="{ show: alertVisible }">
+        El formulario contiene errores
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">
+            Guardar
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+    </div>
+</form>
