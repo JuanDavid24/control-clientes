@@ -22,6 +22,7 @@ export class EditarClientesComponent implements OnInit {
   }
   
   id!: string;
+  alertVisible: boolean = false;
   @ViewChild("clienteForm") clienteForm !: NgForm;
   
   constructor(private clienteServicio: ClienteServicio,
@@ -41,8 +42,12 @@ export class EditarClientesComponent implements OnInit {
     this.cliente = await this.clienteServicio.getCliente(this.id)
   }
 
-  guardar(_t8: any) {
-  throw new Error('Method not implemented.');
+  guardar(form: NgForm) {
+    console.log("guardar cliente editado");
+  }
+
+  eliminar() {
+    console.log("eliminar cliente"); 
   }
 
 }
