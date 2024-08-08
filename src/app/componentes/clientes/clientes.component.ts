@@ -4,11 +4,12 @@ import { Cliente } from '../../modelo/cliente.model';
 import { CurrencyPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
+import { AlertComponent } from "../alert/alert.component";
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [NgFor, CurrencyPipe, RouterLink, FormsModule, NgClass, NgIf],
+  imports: [NgFor, CurrencyPipe, RouterLink, FormsModule, NgClass, NgIf, AlertComponent],
   templateUrl: './clientes.component.html',
   styleUrl: './clientes.component.css'
 })
@@ -45,9 +46,6 @@ export class ClientesComponent implements OnInit {
     if (formCliente.invalid) {
       //Error en formulario 
       this.alertVisible = true;
-      setTimeout(() => {
-        this.alertVisible = false;
-      }, 4000); 
     } 
     else {
       //Agregar cliente
@@ -59,6 +57,10 @@ export class ClientesComponent implements OnInit {
 
   private cerrarModal():void {
     this.botonCerrarModal.nativeElement.click()
+  }
+
+  alertCambioVisibilidad(esVisible: boolean):void {
+    this.alertVisible = esVisible
   }
 }
     

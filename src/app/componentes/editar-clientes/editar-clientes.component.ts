@@ -4,11 +4,12 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ClienteServicio } from '../../servicios/cliente.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgClass, NgIf } from '@angular/common';
+import { AlertComponent } from "../alert/alert.component";
 
 @Component({
   selector: 'app-editar-clientes',
   standalone: true,
-  imports: [NgIf, NgClass, FormsModule, RouterLink],
+  imports: [NgIf, NgClass, FormsModule, RouterLink, AlertComponent],
   templateUrl: './editar-clientes.component.html',
   styleUrl: './editar-clientes.component.css'
 })
@@ -35,15 +36,24 @@ export class EditarClientesComponent implements OnInit {
     
     await this.obtenerCliente();
     console.log(this.cliente);
-    
   }
   
   async obtenerCliente(): Promise<void> {
     this.cliente = await this.clienteServicio.getCliente(this.id)
   }
 
-  guardar(form: NgForm) {
-    console.log("guardar cliente editado");
+  guardar(formCliente: NgForm) {
+    if (formCliente.invalid) {
+      //Error en formulario 
+      this.alertVisible = true;
+    } 
+    else {
+      console.log("guardar cliente editado");
+    }
+  }
+  
+  alertCambioVisibilidad(esVisible: boolean) {
+    this.alertVisible = esVisible
   }
 
   eliminar() {

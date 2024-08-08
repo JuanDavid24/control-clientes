@@ -153,14 +153,11 @@
               </div>
             </div>
 
-            <div 
-              class="alert alert-danger fade"
-              role="alert"
-              *ngIf="alertVisible"
-              [ngClass]="{ show: alertVisible }"
-              >
-              El formulario contiene errores
-            </div>
+            <app-alert
+              [mensaje]="'El formulario contiene errores'"
+              [esVisible]="alertVisible"
+              (cambioVisibilidad)="alertCambioVisibilidad($event)"
+            ></app-alert>
 
             <div class="modal-footer">
               <button 
