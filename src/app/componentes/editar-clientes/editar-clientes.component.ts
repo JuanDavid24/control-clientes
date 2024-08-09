@@ -49,15 +49,17 @@ export class EditarClientesComponent implements OnInit {
     } 
     else {
       console.log("guardar cliente editado");
+      this.clienteServicio.updateCliente(this.id, this.cliente);
+      this.clienteForm.resetForm();
+      this.router.navigate(['/'])
     }
   }
   
-  alertCambioVisibilidad(esVisible: boolean) {
-    this.alertVisible = esVisible
+    alertCambioVisibilidad(esVisible: boolean) {
+      this.alertVisible = esVisible
+      }
+    
+      eliminar() {
+        console.log("eliminar cliente"); 
+      }
   }
-
-  eliminar() {
-    console.log("eliminar cliente"); 
-  }
-
-}
