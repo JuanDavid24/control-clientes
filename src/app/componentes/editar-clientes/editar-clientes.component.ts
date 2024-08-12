@@ -55,11 +55,13 @@ export class EditarClientesComponent implements OnInit {
     }
   }
   
-    alertCambioVisibilidad(esVisible: boolean) {
-      this.alertVisible = esVisible
-      }
-    
-      eliminar() {
-        console.log("eliminar cliente"); 
-      }
+  alertCambioVisibilidad(esVisible: boolean) {
+    this.alertVisible = esVisible
+    }
+  
+  eliminar() {
+    console.log("eliminar cliente"); 
+    this.clienteServicio.deleteCliente(this.id);
+    this.router.navigate(['/'])  
   }
+}

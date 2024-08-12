@@ -22,7 +22,7 @@
         <button type="submit" class="col-sm-2 btn btn-success">
           <i class="fa-solid fa-check"></i> Guardar
         </button>
-        <button (click)="eliminar()" class="col-sm-2 btn btn-danger">
+        <button type="button" class="col-sm-2 btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarClienteModal">
           <i class="fa-solid fa-trash"></i> Eliminar
         </button>
       </div>
@@ -95,3 +95,22 @@
     </div>
   </section>
 </form>
+
+ <!-- Modal eliminar cliente -->
+ <div class="modal fade" id="eliminarClienteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-danger">
+        <h5 class="modal-title">Eliminar cliente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>¿Está seguro que desea eliminar el cliente?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button (click)="eliminar()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>

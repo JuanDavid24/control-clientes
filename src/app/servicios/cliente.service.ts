@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { Cliente } from "../modelo/cliente.model";
 import { Observable } from "rxjs";
-import { DocumentReference, Firestore, addDoc, collection, collectionData, getDoc, orderBy, query, updateDoc } from "@angular/fire/firestore";
+import { DocumentReference, Firestore, addDoc, collection, collectionData, deleteDoc, getDoc, orderBy, query, updateDoc } from "@angular/fire/firestore";
 import { doc } from "firebase/firestore";
 
 @Injectable({providedIn: 'root'})
@@ -27,6 +27,11 @@ export class ClienteServicio{
     updateCliente(id: string, cliente: Cliente): void {
         const docRef = this.getDocRef(id);
         updateDoc(docRef, { ...cliente })
+    }
+
+    deleteCliente(id: string): void {
+        const docRef = this.getDocRef(id);
+        deleteDoc(docRef)
     }
 
     private getDocRef(id: string) {
