@@ -30,10 +30,8 @@ export class ClientesComponent implements OnInit {
 
   ngOnInit(): void {
     this.clienteServicio.getClientes().subscribe(
-      clientes => {
+      clientes => 
             this.clientes = clientes
-            this.clientes.forEach (c => console.log(c))
-      }
     )
   }
     
