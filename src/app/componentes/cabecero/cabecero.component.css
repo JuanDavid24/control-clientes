@@ -1,0 +1,8 @@
+.navbar-brand {
+    transition: color 0.5s linear;
+}
+
+.navbar-brand:hover {
+    color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
+    transition: color 0.5s linear;
+}
