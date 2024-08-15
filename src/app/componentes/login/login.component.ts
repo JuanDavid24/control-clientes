@@ -20,7 +20,10 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-      
+    this.loginService.getAuth().subscribe(auth => {
+      if(auth)
+        this.router.navigate(['/'])
+    })
   }
 
   login(){
@@ -28,6 +31,5 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.email, this.password)
       .then(res => this.router.navigate(['/']))
       .catch(error => console.error(error))
-    
   }
 }

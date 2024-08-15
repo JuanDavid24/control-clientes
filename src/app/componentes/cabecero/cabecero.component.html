@@ -15,9 +15,9 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item px-2 dropdown">
-          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+          <a *ngIf="estaLogueado" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
             <i class="fa-regular fa-user mx-1"></i>
-            <span>Bienvenido</span>
+            <span>Bienvenido {{usuarioLogueado}}</span>
           </a>
           <ul class="dropdown-menu">
             <li>
@@ -28,8 +28,11 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a routerLink="/login" class="nav-link">
+          <a *ngIf="!estaLogueado" routerLink="/login" class="nav-link">
             <i class="fas fa-user mx-1"></i>Login</a
+            >
+          <a *ngIf="estaLogueado" (click)="logout()" class="nav-link" style="cursor: pointer;">
+            <i class="fa-solid fa-arrow-right-from-bracket mx-1"></i>Salir</a
             >
         </li>
       </ul>
