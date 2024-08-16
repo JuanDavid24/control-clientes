@@ -6,12 +6,13 @@ import { NoEncontradoComponent } from './componentes/no-encontrado/no-encontrado
 import { RegistroComponent } from './componentes/registro/registro.component';
 import { TableroComponent } from './componentes/tablero/tablero.component';
 import { AuthGuard } from './guardianes/auth.guard';
+import { inject } from '@angular/core';
 
 export const routes: Routes = [
-    {path: '', component: TableroComponent, canActivate: [AuthGuard]},
+    {path: '', component: TableroComponent, canActivate: [() => inject(AuthGuard).canActivate()]},
     {path: 'login', component: LoginComponent},
     {path: 'registrarse', component: RegistroComponent},
-    {path: 'configuracion', component: ConfiguracionComponent, canActivate: [AuthGuard]},
-    {path: 'cliente/editar/:id', component: EditarClientesComponent, canActivate: [AuthGuard]},
+    {path: 'configuracion', component: ConfiguracionComponent, canActivate: [() => inject(AuthGuard).canActivate()]},
+    {path: 'cliente/editar/:id', component: EditarClientesComponent, canActivate: [() => inject(AuthGuard).canActivate()]},
     {path: '**', component: NoEncontradoComponent}
 ];

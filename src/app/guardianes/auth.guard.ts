@@ -5,7 +5,7 @@ import { Observable } from "rxjs";
 import { map } from 'rxjs/operators'
 
 @Injectable({providedIn: 'root'})
-export class AuthGuard implements CanActivate{
+export class AuthGuard {
     constructor(
         private router: Router,
         private loginService: LoginService,
