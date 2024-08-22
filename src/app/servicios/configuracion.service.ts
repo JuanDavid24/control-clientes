@@ -9,11 +9,25 @@ export class ConfiguracionServicio{
     
     //id unico de configuracion en la bd
     id: string = '1';
+    private configuracionCache?: Configuracion;
 
-    async getConfiguracion(): Promise<Configuracion> {
-        const docRef = this.getDocRef(this.id);
-        const docData = await getDoc(docRef);
-        return docData.data() as Configuracion
+    async getConfiguracion(): Promise<Configuracion | undefined> {
+        if (this.configuracionCache) {
+            console.log("configuración recuperada del caché");
+            return this.configuracionCache;
+        }
+        try {
+            const docRef = this.getDocRef(this.id);
+            const docData = await getDoc(docRef);
+            console.log("configuración obtenida de la BD");
+            this.configuracionCache = docData.data() as Configuracion;
+            return docData.data() as Configuracion;
+                      
+        } 
+        catch(error) {
+            console.error("Error obteniendo configuración de la BD", error);
+            throw error;
+        }
     }
 
     private getDocRef(id: string) {
@@ -23,5 +37,12 @@ export class ConfiguracionServicio{
     updateConfiguracion(configuracion: Configuracion): void {
         const docRef = this.getDocRef(this.id);
         updateDoc(docRef, { ...configuracion })
+            .then (() => {
+                console.log("configuracion actualizada");
+                this.configuracionCache = configuracion;
+            })
+            .catch (error => {
+                console.error("Error al actualizar configuración en la BD", error);
+            })
     }
 }

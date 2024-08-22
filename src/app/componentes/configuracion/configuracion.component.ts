@@ -19,17 +19,19 @@ export class ConfiguracionComponent implements OnInit {
   ) {}
   
   async ngOnInit() {
-    await this.configuracionServicio.getConfiguracion()
-    .then(res => this.permitirRegistro = res.permitirRegistro)
-    .catch(error => {
+    try {
+      const config = await this.configuracionServicio.getConfiguracion();
+      this.permitirRegistro = config?.permitirRegistro ?? false;
+    }
+    catch(error) {
       this.permitirRegistro = false;
-      console.error(error)
-    })
+      console.error(error);
+    }
   }
   
   guardar() {
     console.log("guardar configuracion");  
-    let configuracion = {permitirRegistro: this.permitirRegistro}
-    this.configuracionServicio.updateConfiguracion(configuracion)
+    const configuracion = {permitirRegistro: this.permitirRegistro};
+    this.configuracionServicio.updateConfiguracion(configuracion);
   }
 }
