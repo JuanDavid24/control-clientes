@@ -12,6 +12,7 @@ export class AlertComponent {
   @Input() mensaje: string = '';
   @Input() esVisible: boolean = false;
   @Input() tiempo: number = 4000;
+  @Input() clase: string = '';
   @Output() cambioVisibilidad = new EventEmitter<boolean>();
 
   ngOnChanges() {

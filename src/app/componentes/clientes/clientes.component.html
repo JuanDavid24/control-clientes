@@ -154,8 +154,9 @@
             </div>
 
             <app-alert
-              [mensaje]="'El formulario contiene errores'"
+              mensaje="El formulario contiene errores"
               [esVisible]="alertVisible"
+              clase="alert-danger"
               (cambioVisibilidad)="alertCambioVisibilidad($event)"
             ></app-alert>
 
