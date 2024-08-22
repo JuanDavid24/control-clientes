@@ -34,15 +34,16 @@ export class ConfiguracionServicio{
         return doc(this.firestore, 'configuracion', id)
     }
 
-    updateConfiguracion(configuracion: Configuracion): void {
-        const docRef = this.getDocRef(this.id);
-        updateDoc(docRef, { ...configuracion })
-            .then (() => {
-                console.log("configuracion actualizada");
-                this.configuracionCache = configuracion;
-            })
-            .catch (error => {
-                console.error("Error al actualizar configuración en la BD", error);
-            })
+    async updateConfiguracion(configuracion: Configuracion): Promise<void> {
+        try {
+            const docRef = this.getDocRef(this.id);
+            updateDoc(docRef, { ...configuracion });
+            this.configuracionCache = configuracion;
+            console.log("configuracion actualizada");
+        }
+        catch(error) {
+            console.error("Error al actualizar configuración en la BD", error);
+            throw error
+        }
     }
 }
