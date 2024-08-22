@@ -1,8 +1,9 @@
 <div 
-    class="alert alert-danger fade" 
+    class="alert fade" 
     role="alert" 
     *ngIf="esVisible" 
     [ngClass]="{ show: esVisible }"
+    [className]="clase"
 >    
     {{mensaje}}
 </div>
