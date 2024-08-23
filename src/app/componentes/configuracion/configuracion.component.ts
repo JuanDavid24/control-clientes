@@ -15,6 +15,8 @@ export class ConfiguracionComponent implements OnInit {
 
   permitirRegistro?: boolean;
   alertVisible: boolean = false;
+  alertClase!: string;
+  alertMensaje!: string;
   
   constructor(
     private configuracionServicio: ConfiguracionServicio
@@ -36,10 +38,20 @@ export class ConfiguracionComponent implements OnInit {
     try {
       const configuracion = {permitirRegistro: this.permitirRegistro};
       await this.configuracionServicio.updateConfiguracion(configuracion);
-      this.alertVisible = true
+      this.alertClase = "alert-success";
+      this.alertMensaje = "Configuración actualizada correctamente";
     }
     catch (error) {
-      console.error("Error al actualizar la configuración");
+      console.error("Configuración actualizada correctamente");
+      this.alertClase = "alert-danger";
+      this.alertMensaje = "Error al actualizar - " + error;
+    }
+    finally {
+      this.alertVisible = true;
     }
   }
+
+  alertCambioVisibilidad(esVisible: boolean) {
+    this.alertVisible = esVisible
+    }
 }

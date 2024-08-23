@@ -50,10 +50,11 @@
 
     <div class="mt-2">
       <app-alert 
-        [esVisible]="true"
-        mensaje="Configuración actualizada correctamente"
-        clase="alert-danger"
-        z></app-alert>
-    </div>
+        [esVisible]="alertVisible"
+        [mensaje]="alertMensaje"
+        [clase]="alertClase"
+        (cambioVisibilidad)="alertCambioVisibilidad($event)"
+      ></app-alert>
+    </div> 
   </div>
 </section>
