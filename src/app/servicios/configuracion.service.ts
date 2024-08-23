@@ -37,7 +37,7 @@ export class ConfiguracionServicio{
     async updateConfiguracion(configuracion: Configuracion): Promise<void> {
         try {
             const docRef = this.getDocRef(this.id);
-            updateDoc(docRef, { ...configuracion });
+            await updateDoc(docRef, { ...configuracion });
             this.configuracionCache = configuracion;
             console.log("configuracion actualizada");
         }
