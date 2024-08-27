@@ -1,33 +1,28 @@
 import { Injectable, inject } from "@angular/core";
 import { Configuracion } from "../modelo/configuracion.model";
-import { Firestore, getDoc, updateDoc } from "@angular/fire/firestore";
+import { Firestore, getDoc, updateDoc, docData } from "@angular/fire/firestore";
 import { doc } from "firebase/firestore";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class ConfiguracionServicio{
-    private firestore: Firestore = inject(Firestore);
+
+    constructor(private firestore: Firestore) {
+        this.listenConfiguracionChanges();
+    }
     
     //id unico de configuracion en la bd
     id: string = '1';
-    private configuracionCache?: Configuracion;
 
-    async getConfiguracion(): Promise<Configuracion | undefined> {
-        if (this.configuracionCache) {
-            console.log("configuración recuperada del caché");
-            return this.configuracionCache;
-        }
-        try {
-            const docRef = this.getDocRef(this.id);
-            const docData = await getDoc(docRef);
-            console.log("configuración obtenida de la BD");
-            this.configuracionCache = docData.data() as Configuracion;
-            return docData.data() as Configuracion;
-                      
-        } 
-        catch(error) {
-            console.error("Error obteniendo configuración de la BD", error);
-            throw error;
-        }
+    // enfoque con observables
+    private configuracionSubject = new BehaviorSubject<Configuracion | null>(null)
+    configuracion$ = this.configuracionSubject.asObservable();
+
+    private listenConfiguracionChanges() {
+        const docRef = this.getDocRef(this.id);
+        docData(docRef, {idField: 'id'}).subscribe(
+            (config) => {this.configuracionSubject.next(config as Configuracion)});
+        console.log('escuchando cambios de la configuracion...');
     }
 
     private getDocRef(id: string) {
@@ -38,7 +33,6 @@ export class ConfiguracionServicio{
         try {
             const docRef = this.getDocRef(this.id);
             await updateDoc(docRef, { ...configuracion });
-            this.configuracionCache = configuracion;
             console.log("configuracion actualizada");
         }
         catch(error) {

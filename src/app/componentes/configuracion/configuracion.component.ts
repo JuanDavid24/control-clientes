@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ConfiguracionServicio } from '../../servicios/configuracion.service';
 import { AlertComponent } from "../alert/alert.component";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-configuracion',
@@ -11,8 +12,9 @@ import { AlertComponent } from "../alert/alert.component";
   templateUrl: './configuracion.component.html',
   styleUrl: './configuracion.component.css'
 })
-export class ConfiguracionComponent implements OnInit {
-
+export class ConfiguracionComponent implements OnInit, OnDestroy {
+  
+  private subscription: Subscription = new Subscription;
   permitirRegistro?: boolean;
   alertVisible: boolean = false;
   alertClase!: string;
@@ -22,15 +24,12 @@ export class ConfiguracionComponent implements OnInit {
     private configuracionServicio: ConfiguracionServicio
   ) {}
   
-  async ngOnInit() {
-    try {
-      const config = await this.configuracionServicio.getConfiguracion();
-      this.permitirRegistro = config?.permitirRegistro ?? false;
-    }
-    catch(error) {
-      this.permitirRegistro = false;
-      console.error(error);
-    }
+  ngOnInit() {
+    this.subscription =
+      this.configuracionServicio.configuracion$.subscribe (config =>           
+        this.permitirRegistro = config?.permitirRegistro ?? false
+      );
+    
   }
   
   async guardar() {
@@ -53,5 +52,9 @@ export class ConfiguracionComponent implements OnInit {
 
   alertCambioVisibilidad(esVisible: boolean) {
     this.alertVisible = esVisible
-    }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }

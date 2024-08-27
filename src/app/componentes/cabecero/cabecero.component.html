@@ -32,7 +32,7 @@
             <i class="fas fa-user mx-1"></i>Login
           </a>
         </li>
-        <li *ngIf="!estaLogueado" class="nav-item">
+        <li *ngIf="!estaLogueado && permitirRegistro" class="nav-item">
           <a routerLink="/registrarse" routerLinkActive="router-link-active" class="nav-link">
             <i class="fas fa-user mx-1"></i>Registrarse
           </a>
