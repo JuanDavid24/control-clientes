@@ -8,26 +8,42 @@
   </div>
 </header>
 
-<form (submit)="login()">
+<form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
   <section id="login">
     <div class="container">
       <div class="row justify-content-center">
         <div class="card my-4 col-md-8 col-lg-6 pt-3">
-          <div class="card-header">
+          <div class="card-header mb-2">
             <h5 class="card-title p-1">Inicie sesión</h5>
           </div>
+          <app-alert
+                  mensaje="El formulario contiene errores"
+                  [esVisible]="alertVisible"
+                  clase="alert-danger"
+                  (cambioVisibilidad)="alertCambioVisibilidad($event)"
+                  [tiempo]=5000
+                ></app-alert>
           <div class="card-body">
-            <div class="row row-cols-sm-2 row-cols-1">
+            <div class="row row-cols-sm-2 row-cols-1 pb-2">
               <div class="col">
                 <label for="usuario">Usuario</label>
-                <input id="usuario" class="form-control" name="usuario" type="email" [(ngModel)]="email"/>
+                <input 
+                  id="usuario" 
+                  class="form-control" 
+                  name="usuario" 
+                  type="email" 
+                  #usuario="ngModel"
+                  [(ngModel)]=usuario
+                  required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                  >
+
               </div>
               <div class="col">
                 <label for="password">Contraseña</label>
                 <input id="password" class="form-control" name="password" type="password" [(ngModel)]="password"/>
               </div>
             </div>
-            <div class="d-flex pt-4 justify-content-center">
+            <div class="d-flex justify-content-center mt-3">
               <button type="submit" class="px-5 btn btn-success">
                 <i class="fa-solid fa-check"></i> Aceptar
               </button>
@@ -35,6 +51,8 @@
           </div>
         </div>
       </div>
+
+
     </div>
   </section>
 </form>
