@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { CanActivate, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { LoginService } from "../servicios/login.service";
 import { Observable } from "rxjs";
-import { map } from 'rxjs/operators'
+import { map, take } from 'rxjs/operators'
 
 @Injectable({providedIn: 'root'})
 export class AuthGuard {
@@ -13,6 +13,7 @@ export class AuthGuard {
 
     canActivate(): Observable<boolean> {
         return this.loginService.getAuth().pipe(
+            take(1),
             map( auth => {
                 if (!auth) {
                     this.router.navigate(['/login']);

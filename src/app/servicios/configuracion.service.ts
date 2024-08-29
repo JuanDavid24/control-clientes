@@ -3,6 +3,7 @@ import { Configuracion } from "../modelo/configuracion.model";
 import { Firestore, getDoc, updateDoc, docData } from "@angular/fire/firestore";
 import { doc } from "firebase/firestore";
 import { BehaviorSubject } from "rxjs";
+import { shareReplay, tap } from "rxjs/operators"
 
 @Injectable({providedIn: 'root'})
 export class ConfiguracionServicio{
@@ -16,7 +17,10 @@ export class ConfiguracionServicio{
 
     // enfoque con observables
     private configuracionSubject = new BehaviorSubject<Configuracion | null>(null)
-    configuracion$ = this.configuracionSubject.asObservable();
+    configuracion$ = this.configuracionSubject.asObservable().pipe(
+        tap(() => console.log('Suscripción a configuracion$')),
+        shareReplay(1)
+    );
 
     private listenConfiguracionChanges() {
         const docRef = this.getDocRef(this.id);
