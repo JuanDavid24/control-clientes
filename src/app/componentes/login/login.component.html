@@ -17,7 +17,7 @@
             <h5 class="card-title p-1">Inicie sesión</h5>
           </div>
           <app-alert
-                  mensaje="El formulario contiene errores"
+                  [mensaje]="alertMensaje"
                   [esVisible]="alertVisible"
                   clase="alert-danger"
                   (cambioVisibilidad)="alertCambioVisibilidad($event)"

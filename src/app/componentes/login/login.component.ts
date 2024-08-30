@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   password: string = '';
 
   alertVisible: boolean = false;
+  alertMensaje: string = ""
 
   constructor(private router: Router,
               private loginService: LoginService
@@ -30,20 +31,31 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  login(loginForm: NgForm){
-    console.log(loginForm);
-    
+  login(loginForm: NgForm){  
     if (loginForm.invalid) 
-      this.alertVisible = true;
+      this.mostrarAlert("El formulario contiene errores");
     else {
       console.log("Login");    
       this.loginService.login(this.email, this.password)
-        .then(res => this.router.navigate(['/']))
-        .catch(error => console.error(error))
+        .then( _ => this.router.navigate(['/']))
+        .catch(error =>
+          this.mostrarAlert(`Error al iniciar sesión: ${this.getMensajeErrorAmigable(error)}`))
     }
+  }
+
+  private mostrarAlert(mensaje:string) {
+    this.alertMensaje = mensaje;
+    this.alertVisible = true;
   }
 
   alertCambioVisibilidad(esVisible: boolean):void {
     this.alertVisible = esVisible
   }
+
+  private getMensajeErrorAmigable(error: any): string {
+    if (error.code == 'auth/invalid-credential')
+      return('El correo electrónico o la contraseña no son válidos.') 
+    else
+      return ('Ocurrió un error al iniciar sesión. Inténtalo de nuevo más tarde.');
+    }
 }
