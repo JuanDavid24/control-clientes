@@ -97,10 +97,10 @@
                   [ngClass]="{'is-invalid': nombre.errors && nombre.touched}">
                   <div *ngIf="nombre.invalid && nombre.touched" 
                   class="invalid-feedback">
-                  <span *ngIf="nombre.hasError('required')">Ingrese un nombre</span>
-                  <span *ngIf="nombre.hasError('minlength')">El nombre es muy corto</span>
+                    <span *ngIf="nombre.hasError('required')">Ingrese un nombre</span>
+                    <span *ngIf="nombre.hasError('minlength')">El nombre es muy corto</span>
+                  </div>
                 </div>
-              </div>
               
               <div class="form-group">
                 <label for="apellido">Apellido</label>
@@ -112,7 +112,7 @@
                 #apellido="ngModel"
                 [(ngModel)] = cliente.apellido
                 required minlength="2"
-                [ngClass]="{'is-invalid': apellido.errors && apellido.touched}">
+                [ngClass]="{'is-invalid': apellido.errors && apellido.touched }">
                 <div *ngIf="email.invalid && email.touched" class="invalid-feedback">
                   <span *ngIf="apellido.hasError('required')">Ingrese un apellido</span>
                   <span *ngIf="apellido.hasError('minlength')">El apellido es muy corto</span>

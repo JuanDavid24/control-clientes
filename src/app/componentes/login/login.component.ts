@@ -13,8 +13,8 @@ import { NgClass, NgIf } from '@angular/common';
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
-
-  usuario: string = '';
+  
+  email: string = '';
   password: string = '';
 
   alertVisible: boolean = false;
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
       this.alertVisible = true;
     else {
       console.log("Login");    
-      this.loginService.login(this.usuario, this.password)
+      this.loginService.login(this.email, this.password)
         .then(res => this.router.navigate(['/']))
         .catch(error => console.error(error))
     }
