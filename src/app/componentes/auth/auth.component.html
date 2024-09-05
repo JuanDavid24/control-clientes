@@ -1,20 +1,21 @@
+
 <header id="main-header" class="py-2 bg-info text-light">
   <div class="container">
     <div class="row">
       <div class="col md 6">
-        <h1><i class="fa-solid fa-user-pen"></i> Login</h1>
+        <h1><i class="fa-solid fa-user-pen"></i>{{ modoRegistro ? "Registro" : "Inicio de sesión" }}</h1>
       </div>
     </div>
   </div>
 </header>
 
-<form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+<form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
   <section id="login">
     <div class="container">
       <div class="row justify-content-center">
         <div class="card my-4 col-md-8 col-lg-6 pt-3">
           <div class="card-header mb-2">
-            <h5 class="card-title p-1">Inicie sesión</h5>
+            <h5 class="card-title p-1">{{ modoRegistro ? "Crear una cuenta" : "Indicar datos para ingresar" }}</h5>
           </div>
           <app-alert
                   [mensaje]="alertMensaje"
@@ -50,9 +51,11 @@
                   #pass="ngModel"
                   [(ngModel)]="password"
                   [ngClass]="{'is-invalid': pass.errors && pass.touched}"
+                  [minlength]="modoRegistro ? 6 : null"
                   required/>
                 <div *ngIf="pass.invalid && pass.touched" class="invalid-feedback">
                   <span *ngIf="pass.hasError('required')">Contraseña requerida</span>
+                  <span *ngIf="pass.hasError('minlength')">La contraseña debe tener 6 caractéres como mínimo</span>
                 </div>
               </div>
             </div>
@@ -64,8 +67,6 @@
           </div>
         </div>
       </div>
-
-
     </div>
   </section>
 </form>

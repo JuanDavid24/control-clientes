@@ -9,7 +9,7 @@ export class LoginService{
         return new Promise((resolve, reject) => {
             signInWithEmailAndPassword(this.auth, email, pass)
             .then(datos => resolve(datos), 
-                error => reject(error))
+                error => reject(this.getFriendlyErrorMsg(error)))
         })
     }
 
@@ -25,8 +25,18 @@ export class LoginService{
         return new Promise((resolve, reject) => {
             createUserWithEmailAndPassword(this.auth, email, pass)
             .then(datos => resolve(datos),
-                  error => reject(error))
+                  error => reject(this.getFriendlyErrorMsg(error)))
         });
     }
-}
 
+    private getFriendlyErrorMsg(error: any): string {
+        switch (error.code) {
+            case 'auth/email-already-in-use':
+                return('El correo ingresado ya está en uso')
+            case 'auth/invalid-credential':
+                return('El correo electrónico o la contraseña no son válidos.') 
+            default:
+                return ('Ocurrió un error al realizar la petición. Inténtalo de nuevo más tarde.');
+        }
+    }
+}
