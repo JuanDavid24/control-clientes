@@ -73,11 +73,12 @@
                   <label for="saldo">Saldo</label>
                   <input id="saldo" type="number" name="saldo" class="form-control" #saldo="ngModel"
                     [(ngModel)]=cliente.saldo [ngClass]="{'is-invalid': saldo.errors && saldo.touched}" required
-                    min="0">
-                  <div *ngIf="saldo.invalid && saldo.touched" class="invalid-feedback">
-                    <span *ngIf="saldo.hasError('required')">Ingrese saldo</span>
-                    <span *ngIf="saldo.hasError('min')">El saldo no puede ser negativo</span>
-                  </div>
+                    min="0" max="9999999999999">
+                    <div *ngIf="saldo.invalid && saldo.touched" class="invalid-feedback">
+                      <span *ngIf="saldo.hasError('required')">Ingrese saldo</span>
+                      <span *ngIf="saldo.hasError('min')">El saldo no puede ser negativo</span>
+                      <span *ngIf="saldo.hasError('max')">El saldo es demasiado grande</span>
+                    </div>
                 </div>
 
                 <app-alert
