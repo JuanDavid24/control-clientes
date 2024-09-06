@@ -1,15 +1,16 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ClienteServicio } from '../../servicios/cliente.service';
 import { Cliente } from '../../modelo/cliente.model';
-import { CurrencyPipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AlertComponent } from "../alert/alert.component";
+import { largeCurrencyPipe } from '../../pipes/largeCurrency.pipe';
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [NgFor, CurrencyPipe, RouterLink, FormsModule, NgClass, NgIf, AlertComponent],
+  imports: [NgFor, RouterLink, FormsModule, NgClass, NgIf, AlertComponent, largeCurrencyPipe],
   templateUrl: './clientes.component.html',
   styleUrl: './clientes.component.css'
 })

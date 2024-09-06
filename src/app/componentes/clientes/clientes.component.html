@@ -34,7 +34,7 @@
                             <tr *ngFor="let cliente of clientes; let i = index" class="align-middle">
                                 <td>{{i+1}}</td>
                                 <td>{{cliente.nombre}} {{cliente.apellido}}</td>
-                                <td>{{cliente.saldo | currency:'ARS': '$'}}</td>
+                                <td>{{cliente.saldo | largeCurrency }}</td>
                                 <td>
                                     <a routerLink="/cliente/editar/{{cliente.id}}" class="btn btn-secondary">
                                         <i class="fa-solid fa-pen-to-square"></i>
@@ -52,7 +52,7 @@
                     <div class="card-body">
                         <h3>Saldo total</h3>
                         <h4 class="display-4">
-                            {{getSaldoTotal() | currency: 'ARS': '$'}}
+                            {{getSaldoTotal() | largeCurrency}}
                         </h4>
                     </div>
                 </div>
