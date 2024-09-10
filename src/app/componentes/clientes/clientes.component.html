@@ -16,7 +16,7 @@
  <section id="clientes">
     <div class="container">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-lg-9 mb-3">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="mb-0">Listado de clientes</h4>
@@ -47,26 +47,31 @@
             </div>
 
             <!-- Tarjetas laterales-->
-            <div class="col-md-3">
-                <div class="card text-center bg-danger text-white mb-3">
-                    <div class="card-body">
-                        <h3>Saldo total</h3>
-                        <h4 class="display-4">
-                            {{getSaldoTotal() | largeCurrency}}
-                        </h4>
+             <div class="col-lg-3">
+               <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-1">
+                 <div class="col">
+                     <div class="card text-center bg-danger text-white mb-3">
+                         <div class="card-body">
+                             <h3>Saldo total</h3>
+                             <h4 class="display-4">
+                                 {{getSaldoTotal() | largeCurrency}}
+                             </h4>
+                         </div>
+                     </div>
+                  </div>
+                  <div class="col">
+                    <div class="card text-center bg-success text-white mb-3">
+                        <div class="card-body">
+                            <h3>Clientes totales</h3>
+                            <h4 class="display-4">
+                                <i class="fa-solid fa-users"></i>
+                                {{clientes.length}}
+                            </h4>
+                        </div>
                     </div>
-                </div>
-
-                <div class="card text-center bg-success text-white mb-3">
-                    <div class="card-body">
-                        <h3>Clientes totales</h3>
-                        <h4 class="display-4">
-                            <i class="fa-solid fa-users"></i>
-                            {{clientes.length}}
-                        </h4>
-                    </div>
-                </div>
-            </div>
+                  </div>               
+               </div>
+             </div>
         </div>
     </div>
  </section>
