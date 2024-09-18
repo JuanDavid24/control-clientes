@@ -1,0 +1,63 @@
+<header id="main-header" class="py-2 mb-4 bg-info text-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1><i class="fa-solid fa-user-pen"></i>Usuarios</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="usuarios">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h4>Lista de usuarios</h4>
+          </div>
+          <div class="card-body">
+            <table class="table table-secondary table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>UID</th>
+                  <th>Usuario</th>
+                  <th>Rol</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let usuario of usuarios; let i = index" class="align-middle">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ usuario.uid }}</td>
+                  <td>{{ usuario.email }}</td>
+                  <td>
+                    <select 
+                      class="form-select" 
+                      name="rol{{ i }}" 
+                      id="rol{{ i }}">
+                      <option 
+                        *ngFor="let rol of roles" 
+                        [value]="rol" 
+                        [selected]="usuario.rol === rol">
+                        {{ rol }}
+                      </option>
+                    </select>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<button (click)="obtenerUsuario('HbQygaaB6NPny13E2s84otUol402')">
+  Get usuario ejemplo
+</button>
+
+{{ usuario.uid }}
+{{ usuario.email }}
+{{ usuario.rol }}
