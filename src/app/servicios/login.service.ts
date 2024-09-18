@@ -21,6 +21,10 @@ export class LoginService{
         return authState(this.auth)
     }
 
+    getCurrentUserUID(): string|undefined {
+        return this.auth.currentUser?.uid
+    }
+
     register(email:string, pass:string): Promise<UserCredential> {
         return new Promise((resolve, reject) => {
             createUserWithEmailAndPassword(this.auth, email, pass)

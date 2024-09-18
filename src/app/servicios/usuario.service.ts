@@ -22,6 +22,11 @@ export class UsuarioServicio{
             : undefined
     }
 
+    async getUserRole(uid: string): Promise<string|undefined> {
+        const usuario = await this.getUsuario(uid);
+        return usuario?.rol
+    }
+
     private getDocRef(id: string) {
         return doc(this.firestore, 'usuarios', id)
     }

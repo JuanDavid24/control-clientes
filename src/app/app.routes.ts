@@ -8,13 +8,14 @@ import { AuthGuard } from './guardianes/auth.guard';
 import { ConfiguracionGuard } from './guardianes/configuracion.guard';
 import { inject } from '@angular/core';
 import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
+import { AdminGuard } from './guardianes/admin.guard';
 
 export const routes: Routes = [
     {path: '', component: TableroComponent, canActivate: [() => inject(AuthGuard).canActivate()]},
     {path: 'login', component: AuthComponent},
     {path: 'registrarse', component: AuthComponent, canActivate: [() => inject(ConfiguracionGuard).canActivate()]},
     {path: 'configuracion', component: ConfiguracionComponent, canActivate: [() => inject(AuthGuard).canActivate()]},
-    {path: 'usuarios', component: UsuariosComponent, canActivate: [() => inject(AuthGuard).canActivate()]},
+    {path: 'usuarios', component: UsuariosComponent, canActivate: [() => inject(AdminGuard).canActivate()]},
     {path: 'cliente/editar/:id', component: EditarClientesComponent, canActivate: [() => inject(AuthGuard).canActivate()]},
     {path: '**', component: NoEncontradoComponent}
 ];
