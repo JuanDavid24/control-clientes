@@ -35,7 +35,8 @@
                     <select 
                       class="form-select" 
                       name="rol{{ i }}" 
-                      id="rol{{ i }}">
+                      id="rol{{ i }}"
+                      (change)="editarUsuario($event, usuario)">
                       <option 
                         *ngFor="let rol of roles" 
                         [value]="rol" 

@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { Usuario } from "../modelo/usuario.model";
 import { Observable } from "rxjs";
-import { Firestore, collection, collectionData, orderBy, query, doc, getDoc } from "@angular/fire/firestore";
+import { Firestore, collection, collectionData, orderBy, query, doc, getDoc, updateDoc } from "@angular/fire/firestore";
 
 @Injectable({providedIn: 'root'})
 export class UsuarioServicio{
@@ -25,6 +25,16 @@ export class UsuarioServicio{
     async getUserRole(uid: string): Promise<string|undefined> {
         const usuario = await this.getUsuario(uid);
         return usuario?.rol
+    }
+
+    async updateUser(usuario: Usuario): Promise<void> {
+        try {
+            const docRef = this.getDocRef(usuario.uid);
+            await updateDoc(docRef, {...usuario});       
+        } catch (error) {
+            console.error('Error al actualizar el usuario en la base de datos');            
+            throw error
+        }       
     }
 
     private getDocRef(id: string) {

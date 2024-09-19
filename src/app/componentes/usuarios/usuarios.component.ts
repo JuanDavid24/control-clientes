@@ -34,4 +34,13 @@ export class UsuariosComponent implements OnInit {
       else console.error('no existe usuario');
     });
   }
+
+  editarUsuario(e: Event, u: Usuario) {
+    const select = e.target as HTMLSelectElement;
+    u.rol = select.value;
+    console.log(u);
+    //this.usuarioService.updateUser(u)
+    
+    
+  }
 }
