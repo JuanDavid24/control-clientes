@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioServicio } from '../../servicios/usuario.service';
-import { Usuario } from '../../modelo/usuario.model';
+import { Rol, Usuario } from '../../modelo/usuario.model';
 import { NgFor } from '@angular/common';
 
 @Component({
@@ -35,12 +35,15 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  editarUsuario(e: Event, u: Usuario) {
+  async editarUsuario(e: Event, u: Usuario) {
     const select = e.target as HTMLSelectElement;
-    u.rol = select.value;
-    console.log(u);
-    //this.usuarioService.updateUser(u)
-    
-    
+    u.rol = select.value as Rol ;
+    try {
+      await this.usuarioService.updateUser(u);
+      console.log(`usuario ${u.email} actualizado con rol ${u.rol} `);
+    }
+    catch (error) {
+      console.error("error al actualizar usuario: " + error)
+    }
   }
 }

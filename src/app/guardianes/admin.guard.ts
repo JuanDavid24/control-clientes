@@ -19,6 +19,6 @@ export class AdminGuard {
             return false;
         }        
         const currentUserRole = await this.usuarioServicio.getUserRole(currentUserUID);
-        return currentUserRole === 'admin' ?? false;       
+        return currentUserRole === 'admin';       
     }
 }
