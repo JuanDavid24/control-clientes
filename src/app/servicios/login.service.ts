@@ -1,9 +1,11 @@
 import { inject, Injectable } from "@angular/core";
 import { Auth, authState, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, UserCredential } from "@angular/fire/auth";
+import { UsuarioServicio } from "./usuario.service";
 
 @Injectable({providedIn: 'root'})
 export class LoginService{
     private auth = inject(Auth)
+    private usuarioServicio = inject(UsuarioServicio)
 
     login(email:string, pass:string): Promise<UserCredential> {
         return new Promise((resolve, reject) => {

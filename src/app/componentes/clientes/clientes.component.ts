@@ -6,6 +6,10 @@ import { RouterLink } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AlertComponent } from "../alert/alert.component";
 import { largeCurrencyPipe } from '../../pipes/largeCurrency.pipe';
+import { RolGuard } from '../../guardianes/rol.guard';
+import { Rol } from '../../modelo/usuario.model';
+import { UsuarioServicio } from '../../servicios/usuario.service';
+import { LoginService } from '../../servicios/login.service';
 
 @Component({
   selector: 'app-clientes',
@@ -22,18 +26,28 @@ export class ClientesComponent implements OnInit {
     email: '',
     saldo: 0
   }
+
   clientes: Cliente[] = [];
+  rolUsuario: Rol | undefined;
   alertVisible: boolean = false;
   @ViewChild("clienteForm") clienteForm !: NgForm;
   @ViewChild("botonCerrarModal") botonCerrarModal !: ElementRef;
 
-  constructor(private clienteServicio: ClienteServicio) { }
+  constructor(private clienteServicio: ClienteServicio,
+              private loginServicio: LoginService,
+              private usuarioServicio: UsuarioServicio
+  ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.clienteServicio.getClientes().subscribe(
       clientes => 
             this.clientes = clientes
     )
+
+    const uid = this.loginServicio.getCurrentUserUID();
+    if (uid) {
+      this.rolUsuario = await this.usuarioServicio.getUserRole(uid)
+    }
   }
     
   getSaldoTotal() {
@@ -52,6 +66,12 @@ export class ClientesComponent implements OnInit {
       this.clienteForm.resetForm();
       this.cerrarModal()
     }
+  }
+
+  tienePermisoEditor():Boolean {
+    return this.rolUsuario 
+      ? ['admin', 'editor'].includes(this.rolUsuario) 
+      : false
   }
 
   private cerrarModal():void {

@@ -19,7 +19,7 @@ export class UsuariosComponent implements OnInit {
     rol: '',
   };
 
-  roles: string[] = ["lector", "editor", "admin"];
+  roles: string[] = ["lector", "editor", "admin"]; // para los option del select
 
   constructor(private usuarioService: UsuarioServicio) {}
 

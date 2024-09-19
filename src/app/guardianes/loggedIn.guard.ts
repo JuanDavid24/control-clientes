@@ -5,7 +5,7 @@ import { Observable } from "rxjs";
 import { map, take } from 'rxjs/operators'
 
 @Injectable({providedIn: 'root'})
-export class AuthGuard {
+export class LoggedInGuard {
     constructor(
         private router: Router,
         private loginService: LoginService,
