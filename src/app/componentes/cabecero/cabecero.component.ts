@@ -4,6 +4,8 @@ import { LoginService } from '../../servicios/login.service';
 import { NgIf } from '@angular/common';
 import { ConfiguracionServicio } from '../../servicios/configuracion.service';
 import { Subscription } from 'rxjs';
+import { RolService } from '../../servicios/rol.service';
+import { Usuario } from '../../modelo/usuario.model';
 
 @Component({
   selector: 'app-cabecero',
@@ -16,12 +18,13 @@ export class CabeceroComponent implements OnInit {
   
   private subscription: Subscription = new Subscription;
   estaLogueado: boolean = false;
-  usuarioLogueado: string | null = null;
+  usuarioLogueado!: Usuario;
   permitirRegistro!: boolean;
 
   constructor(private loginService: LoginService,
               private router: Router,
-              private configuracionServicio: ConfiguracionServicio
+              private configuracionServicio: ConfiguracionServicio,
+              private rolServicio: RolService
   ) {}
   
   ngOnInit() {
@@ -29,13 +32,22 @@ export class CabeceroComponent implements OnInit {
       this.configuracionServicio.configuracion$.subscribe( 
         config => this.permitirRegistro = config?.permitirRegistro ?? false
       ));
-    
-    this.subscription.add(
-      this.loginService.getAuth().subscribe(auth => {
-        if (auth) {
-          this.estaLogueado = true;
-          this.usuarioLogueado = auth.email
-        }}));
+
+    //usuario logueado 
+    this.loginService.getCurrentUser().subscribe(usuario => {
+      if (usuario) {
+        this.usuarioLogueado = usuario;
+        this.estaLogueado = true;
+      }
+      else 
+        this.estaLogueado = false
+    });
+  }
+
+  puedeEditarRoles(): boolean {
+    return this.usuarioLogueado 
+      ? this.rolServicio.esAdmin(this.usuarioLogueado)
+      : false
   }
 
   logout(): void{

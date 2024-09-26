@@ -28,5 +28,9 @@ export class RolService {
 
     return (this.jerarquiaRol[usuario.rol] > this.jerarquiaRol[usuarioObjetivo.rol]);
   }
+
+  esAdmin(usuario: Usuario): boolean {
+    return ['superadmin', 'admin'].includes(usuario.rol)
+  }
 }
 

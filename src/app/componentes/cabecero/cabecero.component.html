@@ -17,7 +17,7 @@
         <li class="nav-item px-2 dropdown">
           <a *ngIf="estaLogueado" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
             <i class="fa-regular fa-user mx-1"></i>
-            <span>Bienvenido {{usuarioLogueado}}</span>
+            <span>Bienvenido {{usuarioLogueado.email}}</span>
           </a>
           <ul class="dropdown-menu">
             <li>
@@ -25,7 +25,7 @@
                 <i class="fa-solid fa-gear pe-1"></i>Configuración</a
               >
             </li>
-            <li>
+            <li *ngIf="puedeEditarRoles()">
               <a routerLink="/usuarios" class="dropdown-item">
                 <i class="fa-solid fa-users pe-1"></i>Usuarios</a
               >
