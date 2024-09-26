@@ -36,7 +36,8 @@
                       class="form-select" 
                       name="rol{{ i }}" 
                       id="rol{{ i }}"
-                      (change)="editarUsuario($event, usuario)">
+                      (change)="editarUsuario($event, usuario)"
+                      [disabled]="!puedeEditar(usuario)">
                       <option 
                         *ngFor="let rol of roles" 
                         [value]="rol" 
@@ -59,6 +60,6 @@
   Get usuario ejemplo
 </button>
 
-{{ usuario.uid }}
-{{ usuario.email }}
-{{ usuario.rol }}
+{{ usuarioLogueado.uid }}
+{{ usuarioLogueado.email }}
+{{ usuarioLogueado.rol }}

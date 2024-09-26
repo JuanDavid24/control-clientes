@@ -26,19 +26,15 @@ export class UsuariosComponent implements OnInit {
     private loginService: LoginService) {}
 
   ngOnInit() {
+    //lista de usuarios
     this.usuarioService.getUsuarios().subscribe(
       usuarios => this.usuarios = usuarios);
     
-    this.loginService.getAuth().subscribe(
-      usuario => {
-        if (usuario) {
-          try {
-            const rol = this.usuarioService.getUserRole(usuario.uid)
-          }
-          this.usuarioLogueado = new Usuario(usuario.uid, usuario.email??'', rol)
-        }
-      }
-    )
+    //usuario logueado 
+    this.loginService.getCurrentUser().subscribe(usuario => {
+        if (usuario)
+          this.usuarioLogueado = usuario;
+    });
   }
 
   obtenerUsuario(uid: string) {
@@ -58,5 +54,9 @@ export class UsuariosComponent implements OnInit {
     catch (error) {
       console.error("error al actualizar usuario: " + error)
     }
+  }
+
+  puedeEditar(usuarioObjetivo: Usuario): boolean {
+    return this.rolService.puedeEditarRol(this.usuarioLogueado, usuarioObjetivo)
   }
 }

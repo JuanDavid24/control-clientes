@@ -1,6 +1,8 @@
 import { inject, Injectable } from "@angular/core";
 import { Auth, authState, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, UserCredential } from "@angular/fire/auth";
 import { UsuarioServicio } from "./usuario.service";
+import { Observable, switchMap } from "rxjs";
+import { Usuario } from "../modelo/usuario.model";
 
 @Injectable({providedIn: 'root'})
 export class LoginService{
@@ -21,6 +23,21 @@ export class LoginService{
     
     getAuth() {
         return authState(this.auth)
+    }
+
+    getCurrentUser():Observable<Usuario|null> {
+        return this.getAuth().pipe (
+            switchMap(async (usuario) => {
+                if (!usuario) 
+                    return null;
+                const rol = await this.usuarioServicio.getUserRole(usuario.uid);
+                return rol 
+                    ? new Usuario(usuario.uid, usuario.email ?? '', rol) 
+                    : null;
+                }
+            )
+        )
+        
     }
 
     getCurrentUserUID(): string|undefined {

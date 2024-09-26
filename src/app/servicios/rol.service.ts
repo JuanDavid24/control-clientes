@@ -23,7 +23,7 @@ export class RolService {
     if (usuario === usuarioObjetivo)
       return false;
 
-    if (['editor', 'lector'].includes(usuario.rol))
+    if (['editor', 'lector'].includes(usuario.rol)) 
       return false;
 
     return (this.jerarquiaRol[usuario.rol] > this.jerarquiaRol[usuarioObjetivo.rol]);
