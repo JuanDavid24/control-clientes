@@ -7,9 +7,10 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { AlertComponent } from "../alert/alert.component";
 import { largeCurrencyPipe } from '../../pipes/largeCurrency.pipe';
 import { RolGuard } from '../../guardianes/rol.guard';
-import { Rol } from '../../modelo/usuario.model';
+import { Rol, Usuario } from '../../modelo/usuario.model';
 import { UsuarioServicio } from '../../servicios/usuario.service';
 import { LoginService } from '../../servicios/login.service';
+import { RolService } from '../../servicios/rol.service';
 
 @Component({
   selector: 'app-clientes',
@@ -28,6 +29,7 @@ export class ClientesComponent implements OnInit {
   }
 
   clientes: Cliente[] = [];
+  usuarioLogueado!: Usuario;
   rolUsuario: Rol | undefined;
   alertVisible: boolean = false;
   @ViewChild("clienteForm") clienteForm !: NgForm;
@@ -35,7 +37,8 @@ export class ClientesComponent implements OnInit {
 
   constructor(private clienteServicio: ClienteServicio,
               private loginServicio: LoginService,
-              private usuarioServicio: UsuarioServicio
+              private usuarioServicio: UsuarioServicio,
+              private rolServicio: RolService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -44,10 +47,11 @@ export class ClientesComponent implements OnInit {
             this.clientes = clientes
     )
 
-    const uid = this.loginServicio.getCurrentUserUID();
-    if (uid) {
-      this.rolUsuario = await this.usuarioServicio.getUserRole(uid)
-    }
+    //usuario logueado 
+    this.loginServicio.getCurrentUser().subscribe(usuario => {
+      if (usuario) {
+        this.usuarioLogueado = usuario;
+    }});
   }
     
   getSaldoTotal() {
@@ -69,9 +73,7 @@ export class ClientesComponent implements OnInit {
   }
 
   tienePermisoEditor():Boolean {
-    return this.rolUsuario 
-      ? ['admin', 'editor'].includes(this.rolUsuario) 
-      : false
+    return this.rolServicio.puedeEditarClientes(this.usuarioLogueado);
   }
 
   private cerrarModal():void {

@@ -37,7 +37,7 @@ export class CabeceroComponent implements OnInit {
     this.loginService.getCurrentUser().subscribe(usuario => {
       if (usuario) {
         this.usuarioLogueado = usuario;
-        this.estaLogueado = true;
+        this.estaLogueado = true;     
       }
       else 
         this.estaLogueado = false

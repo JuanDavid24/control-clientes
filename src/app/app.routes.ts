@@ -14,8 +14,8 @@ export const routes: Routes = [
     {path: '', component: TableroComponent, canActivate: [() => inject(LoggedInGuard).canActivate()]},
     {path: 'login', component: AuthComponent},
     {path: 'registrarse', component: AuthComponent, canActivate: [() => inject(ConfiguracionGuard).canActivate()]},
-    {path: 'configuracion', component: ConfiguracionComponent, canActivate: [() => inject(RolGuard).canActivate(['admin'])]},
-    {path: 'usuarios', component: UsuariosComponent, canActivate: [() => inject(RolGuard).canActivate(['admin'])]},
-    {path: 'cliente/editar/:id', component: EditarClientesComponent, canActivate: [() => inject(RolGuard).canActivate(['admin', 'editor'])]},
+    {path: 'configuracion', component: ConfiguracionComponent, canActivate: [() => inject(RolGuard).canActivate(['superadmin', 'admin'])]},
+    {path: 'usuarios', component: UsuariosComponent, canActivate: [() => inject(RolGuard).canActivate(['superadmin', 'admin'])]},
+    {path: 'cliente/editar/:id', component: EditarClientesComponent, canActivate: [() => inject(RolGuard).canActivate(['superadmin', 'admin', 'editor'])]},
     {path: '**', component: NoEncontradoComponent}
 ];

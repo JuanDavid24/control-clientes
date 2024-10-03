@@ -31,9 +31,7 @@ export class LoginService{
                 if (!usuario) 
                     return null;
                 const rol = await this.usuarioServicio.getUserRole(usuario.uid);
-                return rol 
-                    ? new Usuario(usuario.uid, usuario.email ?? '', rol) 
-                    : null;
+                return new Usuario(usuario.uid, usuario.email ?? '', rol ?? 'lector');
                 }
             )
         )

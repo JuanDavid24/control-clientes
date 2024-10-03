@@ -37,7 +37,7 @@
                       name="rol{{ i }}" 
                       id="rol{{ i }}"
                       (change)="editarUsuario($event, usuario)"
-                      [disabled]="!puedeEditar(usuario)">
+                      *ngIf="puedeEditar(usuario)">
                       <option 
                         *ngFor="let rol of roles" 
                         [value]="rol" 
@@ -45,6 +45,8 @@
                         {{ rol }}
                       </option>
                     </select>
+                    <div *ngIf="!puedeEditar(usuario)">
+                      {{ usuario.rol }}</div>
                   </td>
                 </tr>
               </tbody>

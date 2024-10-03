@@ -18,7 +18,7 @@ export class UsuariosComponent implements OnInit {
   usuarioLogueado!: Usuario;
 
 
-  roles: string[] = ["lector", "editor", "admin"]; // para los option del select
+  roles!: Array<Rol>; // para los option del select
 
   constructor(
     private usuarioService: UsuarioServicio,
@@ -32,9 +32,12 @@ export class UsuariosComponent implements OnInit {
     
     //usuario logueado 
     this.loginService.getCurrentUser().subscribe(usuario => {
-        if (usuario)
+        if (usuario) {
           this.usuarioLogueado = usuario;
-    });
+          
+          //lista de roles que el usuario puede editar
+          this.roles = this.rolService.rolesQuePuedeEditar(this.usuarioLogueado);
+    }});
   }
 
   obtenerUsuario(uid: string) {
@@ -57,6 +60,6 @@ export class UsuariosComponent implements OnInit {
   }
 
   puedeEditar(usuarioObjetivo: Usuario): boolean {
-    return this.rolService.puedeEditarRol(this.usuarioLogueado, usuarioObjetivo)
+    return this.rolService.puedeEditar(this.usuarioLogueado, usuarioObjetivo)
   }
 }
