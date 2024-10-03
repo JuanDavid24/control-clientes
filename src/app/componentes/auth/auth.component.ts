@@ -35,7 +35,7 @@ export class AuthComponent {
     
     // Asigno método para el submit
     this.servicioSubmit = this.modoRegistro
-      ? this.servicioSubmit = (email, pass) => this.loginService.register(email, pass)
+      ? this.servicioSubmit = (email, pass) => this.loginService.register(email, pass, 'lector')
       : this.servicioSubmit = (email, pass) => this.loginService.login(email, pass)
   }
 

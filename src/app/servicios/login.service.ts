@@ -1,8 +1,8 @@
 import { inject, Injectable } from "@angular/core";
-import { Auth, authState, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, UserCredential } from "@angular/fire/auth";
+import { Auth, authState, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, UserCredential } from "@angular/fire/auth";
 import { UsuarioServicio } from "./usuario.service";
 import { Observable, switchMap } from "rxjs";
-import { Usuario } from "../modelo/usuario.model";
+import { Rol, Usuario } from "../modelo/usuario.model";
 
 @Injectable({providedIn: 'root'})
 export class LoginService{
@@ -42,12 +42,23 @@ export class LoginService{
         return this.auth.currentUser?.uid
     }
 
-    register(email:string, pass:string): Promise<UserCredential> {
-        return new Promise((resolve, reject) => {
-            createUserWithEmailAndPassword(this.auth, email, pass)
-            .then(datos => resolve(datos),
-                  error => reject(this.getFriendlyErrorMsg(error)))
-        });
+    async register(email:string, pass:string, rol:Rol): Promise<UserCredential> {
+        let credencialNuevoUsuario: UserCredential | undefined;
+        // creacion usuario firebase
+        try {
+            credencialNuevoUsuario = await createUserWithEmailAndPassword(this.auth, email, pass);
+        } catch (error) {
+            throw new Error(this.getFriendlyErrorMsg(error));
+        }
+
+        // agregar usuario a coleccion de usuarios de la BD
+        const usuario = new Usuario(credencialNuevoUsuario.user.uid, email, rol)
+        try {
+            await this.usuarioServicio.addUser(usuario);
+        } catch (error) {
+            throw error;
+        }
+        return(credencialNuevoUsuario);
     }
 
     private getFriendlyErrorMsg(error: any): string {
