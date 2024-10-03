@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { LoginService } from '../../servicios/login.service';
-import { NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { ConfiguracionServicio } from '../../servicios/configuracion.service';
 import { Subscription } from 'rxjs';
 import { RolService } from '../../servicios/rol.service';
@@ -10,7 +10,7 @@ import { Usuario } from '../../modelo/usuario.model';
 @Component({
   selector: 'app-cabecero',
   standalone: true,
-  imports: [RouterModule, NgIf],
+  imports: [RouterModule, NgIf, NgClass],
   templateUrl: './cabecero.component.html',
   styleUrl: './cabecero.component.css'
 })
@@ -44,10 +44,14 @@ export class CabeceroComponent implements OnInit {
     });
   }
 
-  puedeEditarRoles(): boolean {
+  esAdministrador(): boolean {
     return this.usuarioLogueado 
       ? this.rolServicio.esAdmin(this.usuarioLogueado)
       : false
+  }
+
+  esSuperadmin(): boolean {
+    return this.usuarioLogueado.rol === 'superadmin';
   }
 
   logout(): void{

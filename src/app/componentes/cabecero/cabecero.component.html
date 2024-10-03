@@ -15,17 +15,22 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item px-2 dropdown">
-          <a *ngIf="estaLogueado" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+          <a *ngIf="estaLogueado" 
+          class="nav-link" 
+          data-bs-toggle="dropdown"
+          [ngClass]="{'dropdown-toggle': esAdministrador()}">
             <i class="fa-regular fa-user mx-1"></i>
             <span>Bienvenido {{usuarioLogueado.email}}</span>
           </a>
-          <ul class="dropdown-menu">
-            <li>
+          <ul 
+            class="dropdown-menu"
+            *ngIf="esAdministrador()">
+            <li *ngIf="esSuperadmin()">
               <a routerLink="/configuracion" class="dropdown-item">
                 <i class="fa-solid fa-gear pe-1"></i>Configuración</a
               >
             </li>
-            <li *ngIf="puedeEditarRoles()">
+            <li>
               <a routerLink="/usuarios" class="dropdown-item">
                 <i class="fa-solid fa-users pe-1"></i>Usuarios</a
               >
