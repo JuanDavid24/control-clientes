@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { Rol, Usuario } from "../modelo/usuario.model";
 import { Observable } from "rxjs";
-import { Firestore, collection, collectionData, orderBy, query, doc, getDoc, updateDoc, DocumentReference, addDoc } from "@angular/fire/firestore";
+import { Firestore, collection, collectionData, orderBy, query, doc, getDoc, updateDoc, DocumentReference, addDoc, setDoc } from "@angular/fire/firestore";
 
 @Injectable({providedIn: 'root'})
 export class UsuarioServicio{
@@ -27,8 +27,8 @@ export class UsuarioServicio{
         return usuario?.rol as Rol
     }
 
-    async addUser(usuario: Usuario): Promise<DocumentReference> {
-       return addDoc(this.usuariosRef, {...usuario})
+    async addUser(usuario: Usuario):Promise<void> {
+       return setDoc(doc(this.firestore, "usuarios", usuario.uid), {...usuario})
     }
 
     async updateUser(usuario: Usuario): Promise<void> {
