@@ -1,10 +1,37 @@
 service cloud.firestore {
   match /databases/{database}/documents {
+  	
+    // verifica que el usuario esta logueado
+  	function isSignedIn() {
+    	return request.auth != null;
+    }
+    	
+    // dado un uid, devuelve rol del usuario
+    function getRole(userId) {
+    	return (get(/databases/$(database)/documents/usuarios/$(userId)).data.rol);
+    }
+    
+    // dada una lista de roles, verifica que el rol del usuario logueado sea alguno de la lista
+    function isOneOfRoles(roles) {
+    	return (isSignedIn() && getRole(request.auth.uid) in roles);
+    }
+    
     match /clientes/{document=**} {
-      allow read, write: if request.auth != null;
+      allow read: if isSignedIn();
+      allow write: if isOneOfRoles(['superadmin', 'admin', 'editor']);
     }
     match /configuracion/{document=**} {
-      allow read, write;
+      allow read;
+      allow update: if isOneOfRoles(['superadmin']);
+    }
+    
+    match /usuarios/{usuario} {
+    	allow read: 
+      	if (isOneOfRoles(['superadmin', 'admin']) || usuario == request.auth.uid);
+      allow create: 
+      	if get(/databases/$(database)/documents/configuracion/1).data.permitirRegistro == true;
+      allow update: 
+      	if isOneOfRoles(['superadmin', 'admin']);
     }
   }
 }
