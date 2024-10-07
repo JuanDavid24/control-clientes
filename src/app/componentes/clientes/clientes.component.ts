@@ -30,14 +30,12 @@ export class ClientesComponent implements OnInit {
 
   clientes: Cliente[] = [];
   usuarioLogueado!: Usuario;
-  rolUsuario: Rol | undefined;
   alertVisible: boolean = false;
   @ViewChild("clienteForm") clienteForm !: NgForm;
   @ViewChild("botonCerrarModal") botonCerrarModal !: ElementRef;
 
   constructor(private clienteServicio: ClienteServicio,
               private loginServicio: LoginService,
-              private usuarioServicio: UsuarioServicio,
               private rolServicio: RolService
   ) { }
 
