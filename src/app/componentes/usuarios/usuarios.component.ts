@@ -40,13 +40,6 @@ export class UsuariosComponent implements OnInit {
     }});
   }
 
-  obtenerUsuario(uid: string) {
-    this.usuarioService.getUsuario(uid).then((data) => {
-      if (data) this.usuario = data;
-      else console.error('no existe usuario');
-    });
-  }
-
   async editarUsuario(e: Event, u: Usuario) {
     const select = e.target as HTMLSelectElement;
     u.rol = select.value as Rol ;
