@@ -1,58 +1,60 @@
-<nav class="navbar navbar-expand-lg bg-dark p-1" data-bs-theme="dark">
-  <div class="container">
-    <a routerLink="/" class="navbar-brand">Control Clientes</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item px-2 dropdown">
-          <a *ngIf="estaLogueado" 
-          class="nav-link" 
-          data-bs-toggle="dropdown"
-          [ngClass]="{'dropdown-toggle': esAdministrador()}">
-            <i class="fa-regular fa-user mx-1"></i>
-            <span>Bienvenido {{usuarioLogueado.email}}</span>
-          </a>
-          <ul 
-            class="dropdown-menu"
-            *ngIf="esAdministrador()">
-            <li *ngIf="esSuperadmin()">
-              <a routerLink="/configuracion" class="dropdown-item">
-                <i class="fa-solid fa-gear pe-1"></i>Configuración</a
-              >
-            </li>
-            <li>
-              <a routerLink="/usuarios" class="dropdown-item">
-                <i class="fa-solid fa-users pe-1"></i>Usuarios</a
-              >
-            </li>
-          </ul>
-        </li>
-        <li *ngIf="!estaLogueado" class="nav-item">
-          <a routerLink="/login" routerLinkActive="router-link-active" class="nav-link">
-            <i class="fas fa-user mx-1"></i>Login
-          </a>
-        </li>
-        <li *ngIf="!estaLogueado && permitirRegistro" class="nav-item">
-          <a routerLink="/registrarse" routerLinkActive="router-link-active" class="nav-link">
-            <i class="fas fa-user mx-1"></i>Registrarse
-          </a>
-        </li>
-        <li *ngIf="estaLogueado" class="nav-item">
-          <a (click)="logout()" class="nav-link" style="cursor: pointer;">
-            <i class="fa-solid fa-arrow-right-from-bracket mx-1"></i>Salir
-          </a>
-        </li>
-      </ul>
+<header>
+  <nav class="navbar navbar-expand-lg bg-dark p-1" data-bs-theme="dark">
+    <div class="container">
+      <a routerLink="/" class="navbar-brand">Control Clientes</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item px-2 dropdown">
+            <a *ngIf="estaLogueado" 
+            class="nav-link" 
+            data-bs-toggle="dropdown"
+            [ngClass]="{'dropdown-toggle': esAdministrador()}">
+              <i class="fa-regular fa-user mx-1"></i>
+              <span>Bienvenido {{usuarioLogueado.email}}</span>
+            </a>
+            <ul 
+              class="dropdown-menu"
+              *ngIf="esAdministrador()">
+              <li *ngIf="esSuperadmin()">
+                <a routerLink="/configuracion" class="dropdown-item">
+                  <i class="fa-solid fa-gear pe-1"></i>Configuración</a
+                >
+              </li>
+              <li>
+                <a routerLink="/usuarios" class="dropdown-item">
+                  <i class="fa-solid fa-users pe-1"></i>Usuarios</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li *ngIf="!estaLogueado" class="nav-item">
+            <a routerLink="/login" routerLinkActive="router-link-active" class="nav-link">
+              <i class="fas fa-user mx-1"></i>Login
+            </a>
+          </li>
+          <li *ngIf="!estaLogueado && permitirRegistro" class="nav-item">
+            <a routerLink="/registrarse" routerLinkActive="router-link-active" class="nav-link">
+              <i class="fas fa-user mx-1"></i>Registrarse
+            </a>
+          </li>
+          <li *ngIf="estaLogueado" class="nav-item">
+            <a (click)="logout()" class="nav-link" style="cursor: pointer;">
+              <i class="fa-solid fa-arrow-right-from-bracket mx-1"></i>Salir
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</header>
