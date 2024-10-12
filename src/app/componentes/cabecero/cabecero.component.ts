@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { LoginService } from '../../servicios/login.service';
 import { NgClass, NgIf } from '@angular/common';
 import { ConfiguracionServicio } from '../../servicios/configuracion.service';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 import { RolService } from '../../servicios/rol.service';
 import { Usuario } from '../../modelo/usuario.model';
 
@@ -20,6 +20,7 @@ export class CabeceroComponent implements OnInit {
   estaLogueado: boolean = false;
   usuarioLogueado!: Usuario;
   permitirRegistro!: boolean;
+  ruta!:string;
 
   constructor(private loginService: LoginService,
               private router: Router,
@@ -42,6 +43,16 @@ export class CabeceroComponent implements OnInit {
       else 
         this.estaLogueado = false
     });
+
+    // escuchar cambios de ruta
+    this.router.events
+      .pipe(
+        filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe(
+        (event: NavigationEnd) => {this.ruta = event.urlAfterRedirects
+        console.log(this.ruta);}
+      );
+    
   }
 
   esAdministrador(): boolean {
