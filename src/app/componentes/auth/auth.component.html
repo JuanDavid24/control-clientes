@@ -25,9 +25,10 @@
                   [tiempo]=5000
                 ></app-alert>
           <div class="card-body">
-            <div class="row row-cols-sm-2 row-cols-1 pb-2">
+            <div class="row row-cols-1 gy-3 px-2 pb-2"
+              [ngClass]="{'row-cols-md-2': !modoRegistro}">
               <div class="col">
-                <label for="usuario">Usuario</label>
+                <label for="usuario">Correo electrónico</label>
                 <input 
                   id="usuario" 
                   class="form-control" 
@@ -42,6 +43,7 @@
                   <span *ngIf="usuario.hasError('pattern')">El correo no es válido</span>
                 </div>
               </div>
+
               <div class="col">
                 <label for="password">Contraseña</label>
                 <input id="password" 
@@ -58,6 +60,22 @@
                   <span *ngIf="pass.hasError('minlength')">La contraseña debe tener 6 caractéres como mínimo</span>
                 </div>
               </div>
+
+              <div class="col" *ngIf="modoRegistro">
+                <label for="passwordRep">Repetir contraseña</label>
+                <input id="passwordRep" 
+                  class="form-control" 
+                  name="passwordRep" 
+                  type="password" 
+                  #passRep="ngModel"
+                  [(ngModel)]="passwordRep"
+                  [ngClass]="{'is-invalid':pass.dirty && passRep.touched && passRep.value !== pass.value}" 
+                  required/>
+                <div *ngIf="pass.dirty && passRep.value !== pass.value" class="invalid-feedback">
+                  <span>Las contraseñas no coinciden</span>
+                </div>
+              </div>
+             
             </div>
             <div class="d-flex justify-content-center mt-3">
               <button type="submit" class="px-5 btn btn-success">

@@ -16,6 +16,7 @@ import { UserCredential } from 'firebase/auth';
 export class AuthComponent {
   email: string = '';
   password: string = '';
+  passwordRep: string = '';
 
   alertVisible: boolean = false;
   alertMensaje: string = "";
@@ -48,7 +49,8 @@ export class AuthComponent {
 
   onSubmit(usuarioForm: NgForm): void {
     console.log("sumbit");  
-    if (usuarioForm.invalid) {
+    
+    if (usuarioForm.invalid || this.password !== this.passwordRep) {
       this.mostrarAlert("El formulario contiene errores")
     }
     else this.servicioSubmit(this.email, this.password)
