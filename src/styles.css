@@ -5,13 +5,17 @@ app-root {
   flex-direction: column;
 }
 
-app-auth {
+/* todos los app-* de los componentes que estan dentro del main */
+main router-outlet + * {
   flex: 1;
+}
+
+app-auth {
   display: flex;
   flex-direction: column;
-  }
-  
-  app-auth form {
-      margin: auto 0;
-  }
+}
+
+app-auth form {
+    margin: auto 0;
+}
   
