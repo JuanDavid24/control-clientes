@@ -49,13 +49,20 @@ export class AuthComponent {
 
   onSubmit(usuarioForm: NgForm): void {
     console.log("sumbit");  
-    
-    if (usuarioForm.invalid || this.password !== this.passwordRep) {
-      this.mostrarAlert("El formulario contiene errores")
+    let esValido = true;
+    esValido = usuarioForm.invalid ?? false;
+
+    if (esValido && this.modoRegistro) {
+      esValido = this.password == this.passwordRep;
     }
-    else this.servicioSubmit(this.email, this.password)
-      .then(_ => this.router.navigate(['/']))
-      .catch(error => this.mostrarAlert(error))
+    esValido 
+      ?
+      this.servicioSubmit(this.email, this.password)
+        .then(_ => this.router.navigate(['/']))
+        .catch(error => this.mostrarAlert(error))
+      :
+      this.mostrarAlert("El formulario contiene errores")
+
   }
 
   private mostrarAlert(mensaje:string) {
