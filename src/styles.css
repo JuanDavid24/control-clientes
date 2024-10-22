@@ -4,3 +4,14 @@ app-root {
   display: flex;
   flex-direction: column;
 }
+
+app-auth {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  }
+  
+  app-auth form {
+      margin: auto 0;
+  }
+  
