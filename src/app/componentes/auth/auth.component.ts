@@ -50,7 +50,7 @@ export class AuthComponent {
   onSubmit(usuarioForm: NgForm): void {
     console.log("sumbit");  
     let esValido = true;
-    esValido = usuarioForm.invalid ?? false;
+    esValido = usuarioForm.valid ?? false;
 
     if (esValido && this.modoRegistro) {
       esValido = this.password == this.passwordRep;
