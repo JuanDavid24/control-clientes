@@ -8,6 +8,7 @@ app-root {
 /* todos los app-* de los componentes que estan dentro del main */
 main router-outlet + * {
   flex: 1;
+  max-width: 100%;
 }
 
 app-auth {
