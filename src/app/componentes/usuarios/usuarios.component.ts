@@ -4,11 +4,12 @@ import { Rol, Usuario } from '../../modelo/usuario.model';
 import { NgFor, NgIf } from '@angular/common';
 import { RolService } from '../../servicios/rol.service';
 import { LoginService } from '../../servicios/login.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [NgFor, NgIf],
+  imports: [NgFor, NgIf, RouterLink],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css',
 })
