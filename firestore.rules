@@ -11,27 +11,50 @@ service cloud.firestore {
     	return (get(/databases/$(database)/documents/usuarios/$(userId)).data.rol);
     }
     
+    // dados un uid y una lista de roles, verifica que el rol del usuario sea alguno de la lista
+    function isOneOfRoles(uid, roles) {
+    	return (getRole(uid) in roles);
+    }
     // dada una lista de roles, verifica que el rol del usuario logueado sea alguno de la lista
-    function isOneOfRoles(roles) {
+    function signedInUserIsOneOfRoles(roles) {
     	return (isSignedIn() && getRole(request.auth.uid) in roles);
     }
     
+    // devuelve el rol del usuario enviado en el body request
+    function getRoleFromReqPayload(){
+    	return request.resource.data.rol
+    }
+    
+    // dada una lista de roles, dice si el rol del usuario enviado en el body request (para crear o editar) existe en la lista
+    function roleInPayloadIsOneOfRoles (roles){
+    	return (getRoleFromReqPayload() in roles);
+    }
+    
+    function canModifyRole(targetUID, rolesAllowedToEdit) {
+    	//let targetRole = getRole(targetUID);
+      return isOneOfRoles(targetUID, rolesAllowedToEdit) && roleInPayloadIsOneOfRoles(rolesAllowedToEdit)
+		}
+    
     match /clientes/{document=**} {
       allow read: if isSignedIn();
-      allow write: if isOneOfRoles(['superadmin', 'admin', 'editor']);
+      allow write: if signedInUserIsOneOfRoles(['superadmin', 'admin', 'editor']);
     }
     match /configuracion/{document=**} {
       allow read;
-      allow update: if isOneOfRoles(['superadmin']);
+      allow update: if signedInUserIsOneOfRoles(['superadmin']);
     }
     
     match /usuarios/{usuario} {
     	allow read: 
-      	if (isOneOfRoles(['superadmin', 'admin']) || usuario == request.auth.uid);
+      	if (signedInUserIsOneOfRoles(['superadmin', 'admin']) || usuario == request.auth.uid);
       allow create: 
-      	if get(/databases/$(database)/documents/configuracion/1).data.permitirRegistro == true;
+      	if 
+        	get(/databases/$(database)/documents/configuracion/1).data.permitirRegistro == true &&
+          getRoleFromReqPayload() == 'lector';
       allow update: 
-      	if isOneOfRoles(['superadmin', 'admin']);
-    }
+      	if 
+        	signedInUserIsOneOfRoles(['superadmin']) && canModifyRole(usuario, ['lector', 'editor', 'admin']) ||
+          signedInUserIsOneOfRoles(['admin']) && canModifyRole(usuario, ['lector', 'editor'])
+        }
   }
 }
