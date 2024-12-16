@@ -1,0 +1,722 @@
+{
+	"info": {
+		"_postman_id": "d7d0ae45-d056-4633-a805-99e039a79785",
+		"name": "Superadmin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6211040"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Auth SAdmin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let res = pm.response.json();\r",
+									"pm.collectionVariables.set(\"user_token\", res.idToken);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"{{SADMIN_EMAIL}}\",\"password\":\"{{SADMIN_PASS}}\",\"returnSecureToken\":true}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={{APIKEY}}",
+							"protocol": "https",
+							"host": [
+								"identitytoolkit",
+								"googleapis",
+								"com"
+							],
+							"path": [
+								"v1",
+								"accounts:signInWithPassword"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{APIKEY}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "GET all Clientes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{PROJECT}}/databases/(default)/documents/clientes",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{PROJECT}}",
+								"databases",
+								"(default)",
+								"documents",
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Cliente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let res = pm.response.json(); // json de respuesta\r",
+									"let docId = \r",
+									"    res.name \r",
+									"        ? res.name.split(\"/\").slice(-1) // obtengo doc id generado\r",
+									"        : ''; \r",
+									"if (docId)\r",
+									"    pm.collectionVariables.set(\"cliente_nuevo_1\", docId);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fields\": {\r\n        \"apellido\": {\r\n            \"stringValue\": \"Perez\"\r\n        },\r\n        \"saldo\": {\r\n            \"integerValue\": \"500\"\r\n        },\r\n        \"nombre\": {\r\n            \"stringValue\": \"Daniel\"\r\n        },\r\n        \"email\": {\r\n            \"stringValue\": \"dperez@prueba.com\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{PROJECT}}/databases/(default)/documents/clientes",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{PROJECT}}",
+								"databases",
+								"(default)",
+								"documents",
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Cliente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let res = pm.response.json(); // json de respuesta\r",
+									"let docId = \r",
+									"    res.name \r",
+									"        ? res.name.split(\"/\").slice(-1) // obtengo doc id generado\r",
+									"        : ''; \r",
+									"if (docId)\r",
+									"    pm.collectionVariables.set(\"cliente_nuevo_1\", docId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fields\": {\r\n        \"apellido\": {\r\n            \"stringValue\": \"Perez\"\r\n        },\r\n        \"saldo\": {\r\n            \"integerValue\": \"9000\"\r\n        },\r\n        \"nombre\": {\r\n            \"stringValue\": \"Daniel Osvaldo\"\r\n        },\r\n        \"email\": {\r\n            \"stringValue\": \"dperez@prueba.com\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{PROJECT}}/databases/(default)/documents/clientes/{{cliente_nuevo_1}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{PROJECT}}",
+								"databases",
+								"(default)",
+								"documents",
+								"clientes",
+								"{{cliente_nuevo_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Cliente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{PROJECT}}/databases/(default)/documents/clientes/{{cliente_nuevo_1}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{PROJECT}}",
+								"databases",
+								"(default)",
+								"documents",
+								"clientes",
+								"{{cliente_nuevo_1}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Autorizados",
+					"item": [
+						{
+							"name": "GET All Usuarios",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/{{PROJECT}}/databases/(default)/documents/usuarios/",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"{{PROJECT}}",
+										"databases",
+										"(default)",
+										"documents",
+										"usuarios",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Crear Usuario lector",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fields\": {\r\n        \"uid\": {\r\n            \"stringValue\": \"{{uid_usuario_prueba}}\"\r\n        },\r\n        \"email\": {\r\n            \"stringValue\": \"{{mail_usuario_prueba}}\"\r\n        },\r\n        \"rol\": {\r\n            \"stringValue\": \"lector\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/{{PROJECT}}/databases/(default)/documents/usuarios?documentId={{uid_usuario_prueba}}",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"{{PROJECT}}",
+										"databases",
+										"(default)",
+										"documents",
+										"usuarios"
+									],
+									"query": [
+										{
+											"key": "documentId",
+											"value": "{{uid_usuario_prueba}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar lector -> editor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fields\": {\r\n        \"uid\": {\r\n            \"stringValue\": \"{{uid_usuario_prueba}}\"\r\n        },\r\n        \"email\": {\r\n            \"stringValue\": \"{{mail_usuario_prueba}}\"\r\n        },\r\n        \"rol\": {\r\n            \"stringValue\": \"editor\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/{{PROJECT}}/databases/(default)/documents/usuarios/{{uid_usuario_prueba}}",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"{{PROJECT}}",
+										"databases",
+										"(default)",
+										"documents",
+										"usuarios",
+										"{{uid_usuario_prueba}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar editor -> admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fields\": {\r\n        \"uid\": {\r\n            \"stringValue\": \"{{uid_usuario_prueba}}\"\r\n        },\r\n        \"email\": {\r\n            \"stringValue\": \"{{mail_usuario_prueba}}\"\r\n        },\r\n        \"rol\": {\r\n            \"stringValue\": \"admin\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/{{PROJECT}}/databases/(default)/documents/usuarios/{{uid_usuario_prueba}}",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"{{PROJECT}}",
+										"databases",
+										"(default)",
+										"documents",
+										"usuarios",
+										"{{uid_usuario_prueba}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar admin -> lector",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fields\": {\r\n        \"uid\": {\r\n            \"stringValue\": \"{{uid_usuario_prueba}}\"\r\n        },\r\n        \"email\": {\r\n            \"stringValue\": \"{{mail_usuario_prueba}}\"\r\n        },\r\n        \"rol\": {\r\n            \"stringValue\": \"lector\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/{{PROJECT}}/databases/(default)/documents/usuarios/{{uid_usuario_prueba}}",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"{{PROJECT}}",
+										"databases",
+										"(default)",
+										"documents",
+										"usuarios",
+										"{{uid_usuario_prueba}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar Usuario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/{{PROJECT}}/databases/(default)/documents/usuarios/{{uid_usuario_prueba}}",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"{{PROJECT}}",
+										"databases",
+										"(default)",
+										"documents",
+										"usuarios",
+										"{{uid_usuario_prueba}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "No autorizados",
+					"item": [
+						{
+							"name": "Crear Usuario no lector",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fields\": {\r\n        \"uid\": {\r\n            \"stringValue\": \"123123\"\r\n        },\r\n        \"email\": {\r\n            \"stringValue\": \"usuario_postman@prueba.com\"\r\n        },\r\n        \"rol\": {\r\n            \"stringValue\": \"editor\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/{{PROJECT}}/databases/(default)/documents/usuarios",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"{{PROJECT}}",
+										"databases",
+										"(default)",
+										"documents",
+										"usuarios"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar Usuario SAdmin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let res = pm.response.json(); // json de respuesta\r",
+											"let docId = \r",
+											"    res.name \r",
+											"        ? res.name.split(\"/\").slice(-1) // obtengo doc id generado\r",
+											"        : null; \r",
+											"if (docId)\r",
+											"    pm.collectionVariables.set(\"usuario_nuevo_1\", docId);\r",
+											"    "
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fields\": {\r\n        \"uid\": {\r\n            \"stringValue\": \"{{UID_SADMIN}}\"\r\n        },\r\n        \"email\": {\r\n            \"stringValue\": \"{{SADMIN_EMAIL}}\"\r\n        },\r\n        \"rol\": {\r\n            \"stringValue\": \"lector\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/{{PROJECT}}/databases/(default)/documents/usuarios/{{UID_SADMIN}}",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"{{PROJECT}}",
+										"databases",
+										"(default)",
+										"documents",
+										"usuarios",
+										"{{UID_SADMIN}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar Usuario SAdmin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/{{PROJECT}}/databases/(default)/documents/usuarios/{{UID_SADMIN}}",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"{{PROJECT}}",
+										"databases",
+										"(default)",
+										"documents",
+										"usuarios",
+										"{{UID_SADMIN}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{user_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "user_token",
+			"value": ""
+		},
+		{
+			"key": "cliente_nuevo_1",
+			"value": ""
+		},
+		{
+			"key": "usuario_nuevo_1",
+			"value": ""
+		},
+		{
+			"key": "uid_usuario_prueba",
+			"value": "creadoPorSAdmin",
+			"type": "default"
+		},
+		{
+			"key": "mail_usuario_prueba",
+			"value": "creadoPorSadmin@sadmin.com",
+			"type": "default"
+		}
+	]
+}
