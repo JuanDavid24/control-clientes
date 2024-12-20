@@ -13,7 +13,7 @@
   <section id="login">
     <div class="container">
       <div class="row justify-content-center">
-        <div class="card my-4 col-md-8 col-lg-6 pt-3">
+        <div class="card my-4 col-md-8 col-lg-6 pt-3 transparency">
           <div class="card-header mb-2">
             <h5 class="card-title p-1">{{ modoRegistro ? "Crear una cuenta" : "Indicar datos para ingresar" }}</h5>
           </div>
@@ -31,7 +31,7 @@
                 <label for="usuario">Correo electrónico</label>
                 <input 
                   id="usuario" 
-                  class="form-control" 
+                  class="form-control underlined" 
                   name="usuario" 
                   type="email" 
                   #usuario="ngModel"
@@ -47,7 +47,7 @@
               <div class="col">
                 <label for="password">Contraseña</label>
                 <input id="password" 
-                  class="form-control" 
+                  class="form-control underlined" 
                   name="password" 
                   type="password" 
                   #pass="ngModel"
@@ -64,7 +64,7 @@
               <div class="col" *ngIf="modoRegistro">
                 <label for="passwordRep">Repetir contraseña</label>
                 <input id="passwordRep" 
-                  class="form-control" 
+                  class="form-control underlined" 
                   name="passwordRep" 
                   type="password" 
                   #passRep="ngModel"
@@ -78,7 +78,7 @@
              
             </div>
             <div class="d-flex justify-content-center mt-3">
-              <button type="submit" class="px-5 btn btn-success">
+              <button type="submit" class="px-5 btn btn-submit">
                 <i class="fa-solid fa-check"></i> Aceptar
               </button>
             </div>

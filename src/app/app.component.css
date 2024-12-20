@@ -2,3 +2,8 @@
   flex: 1;
   display: flex;
 }
+
+.gradient {
+  background: rgb(8,25,46);
+  background: radial-gradient(circle, rgba(8,25,46,1) 23%, rgba(42,4,55,1) 45%, rgba(14,4,99,1) 98%);
+}
