@@ -4,7 +4,7 @@
 1. Crear un nuevo workspace en Postman
 2. Importar los archivos de la carpeta `collections`. 
 3. Importar las variables **globales** y de **entorno** de la carpeta `env`
-4. Correr las pruebas en el entorno `Credenciales`
+4. Seleccionar el entorno `Credenciales` y correr las pruebas
 
 ## Conformación de las pruebas
 

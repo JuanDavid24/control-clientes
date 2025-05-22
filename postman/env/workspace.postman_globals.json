@@ -1,0 +1,35 @@
+{
+	"id": "c09536e7-9c5f-4d93-8df2-bb2529d747dd",
+	"values": [
+		{
+			"key": "BASE_URL",
+			"value": "https://firestore.googleapis.com/v1/projects",
+			"enabled": true
+		},
+		{
+			"key": "PROJECT",
+			"value": "control-clientes-cdf04",
+			"enabled": true
+		},
+		{
+			"key": "UID_SADMIN",
+			"value": "HHFgHHHkxZap8fBbCUjRWbIPoJI2",
+			"enabled": true
+		},
+		{
+			"key": "UID_ADMIN",
+			"value": "l5juGiCSJsgnqxJuaHsbVtHIgXx2",
+			"enabled": true
+		},
+		{
+			"key": "SADMIN_USER_TOKEN",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"name": "Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2025-05-22T20:29:49.735Z",
+	"_postman_exported_using": "Postman/11.44.6"
+}
